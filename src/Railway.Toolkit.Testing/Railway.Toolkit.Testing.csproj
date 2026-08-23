@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>true</WarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Railway.Toolkit.Testing</PackageId>
+    <Title>Railway Toolkit - Testing</Title>
+    <Description>Assertion extensions for testing Result&lt;T&gt; pipelines built with Railway.Toolkit.</Description>
+    <Authors>NullableNeigh</Authors>
+    <PackageTags>railway;functional;result;error-handling;testing;xunit;nunit;mstest</PackageTags>
+    <PackageProjectUrl>https://github.com/NullableNeigh/Railway.Toolkit.Testing</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/NullableNeigh/Railway.Toolkit.Testing</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Railway.Toolkit\src\Railway.Toolkit\Railway.Toolkit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

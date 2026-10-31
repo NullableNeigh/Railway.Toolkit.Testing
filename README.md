@@ -69,6 +69,10 @@ the same way under xUnit, NUnit, MSTest, or any runner that fails a test on an u
 
 ## Testing
 
+Tests restore Railway.Toolkit as a NuGet package from your configured sources.
+The default core version is `1.0.0`. Select another available version by passing
+`-p:RailwayToolkitVersion=1.0.0-dev.1` to `dotnet test`.
+
 The plugin has its own test suite covering every assertion, happy path and failure path:
 
 ```bash

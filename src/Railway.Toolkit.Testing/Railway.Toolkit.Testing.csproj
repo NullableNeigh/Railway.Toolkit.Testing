@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>true</WarningsAsErrors>
+    <RailwayToolkitVersion Condition="'$(RailwayToolkitVersion)' == ''">1.0.0</RailwayToolkitVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -21,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Railway.Toolkit\src\Railway.Toolkit\Railway.Toolkit.csproj" />
+    <PackageReference Include="Railway.Toolkit" Version="$(RailwayToolkitVersion)" />
   </ItemGroup>
 
   <ItemGroup>

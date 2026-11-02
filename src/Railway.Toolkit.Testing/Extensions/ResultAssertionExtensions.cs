@@ -99,6 +99,8 @@ public static class ResultAssertionExtensions
     /// </summary>
     public static Error ShouldBeFail<T>(this Result<T> result, string expectedCode, string expectedMessage)
     {
+        ArgumentNullException.ThrowIfNull(expectedMessage);
+
         Error error = result.ShouldBeFail(expectedCode);
 
         if (error.Message != expectedMessage)

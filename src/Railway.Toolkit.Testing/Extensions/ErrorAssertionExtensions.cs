@@ -5,9 +5,12 @@ namespace Railway.Toolkit.Testing;
 /// </summary>
 public static class ErrorAssertionExtensions
 {
-    /// <summary>
-    /// Asserts that the error has the given code.
-    /// </summary>
+    /// <summary>Asserts that the error has the expected code.</summary>
+    /// <param name="error">The error to inspect.</param>
+    /// <param name="expectedCode">The expected code, compared using ordinal, case-sensitive equality.</param>
+    /// <returns>The original error.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="error"/> or <paramref name="expectedCode"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">The error code differs from the expected code.</exception>
     public static Error ShouldHaveCode(this Error error, string expectedCode)
     {
         ArgumentNullException.ThrowIfNull(error);
@@ -22,9 +25,12 @@ public static class ErrorAssertionExtensions
         return error;
     }
 
-    /// <summary>
-    /// Asserts that the error has the given message.
-    /// </summary>
+    /// <summary>Asserts that the error has the expected message.</summary>
+    /// <param name="error">The error to inspect.</param>
+    /// <param name="expectedMessage">The expected message, compared using ordinal, case-sensitive equality.</param>
+    /// <returns>The original error.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="error"/> or <paramref name="expectedMessage"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">The error message differs from the expected message.</exception>
     public static Error ShouldHaveMessage(this Error error, string expectedMessage)
     {
         ArgumentNullException.ThrowIfNull(error);
@@ -39,9 +45,13 @@ public static class ErrorAssertionExtensions
         return error;
     }
 
-    /// <summary>
-    /// Asserts that the error's field-level <see cref="Error.Details"/> contains <paramref name="expectedMessage"/> for <paramref name="fieldName"/>.
-    /// </summary>
+    /// <summary>Asserts that a field in <see cref="Error.Details"/> contains the expected message.</summary>
+    /// <param name="error">The error to inspect.</param>
+    /// <param name="fieldName">The field key, looked up using the details dictionary's comparer.</param>
+    /// <param name="expectedMessage">The expected field message, compared using ordinal, case-sensitive equality.</param>
+    /// <returns>The original error.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="error"/>, <paramref name="fieldName"/>, or <paramref name="expectedMessage"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">The field is absent or does not contain the expected message.</exception>
     public static Error ShouldHaveDetail(this Error error, string fieldName, string expectedMessage)
     {
         ArgumentNullException.ThrowIfNull(error);
@@ -63,9 +73,13 @@ public static class ErrorAssertionExtensions
         return error;
     }
 
-    /// <summary>
-    /// Asserts that the error's <see cref="Error.InnerErrors"/> contains the given number of errors.
-    /// </summary>
+    /// <summary>Asserts the number of immediate errors in <see cref="Error.InnerErrors"/>.</summary>
+    /// <param name="error">The error to inspect.</param>
+    /// <param name="expectedCount">The expected number of immediate inner errors.</param>
+    /// <returns>The original error.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="error"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">The inner error count differs from the expected count.</exception>
+    /// <remarks>An absent inner error collection counts as zero. Nested errors are not counted recursively.</remarks>
     public static Error ShouldHaveInnerErrorCount(this Error error, int expectedCount)
     {
         ArgumentNullException.ThrowIfNull(error);
@@ -81,9 +95,12 @@ public static class ErrorAssertionExtensions
         return error;
     }
 
-    /// <summary>
-    /// Asserts that the error wraps an exception of type <typeparamref name="TException"/> and returns it.
-    /// </summary>
+    /// <summary>Asserts that the error wraps an exception assignable to the requested type.</summary>
+    /// <typeparam name="TException">The expected exception type; derived types are accepted.</typeparam>
+    /// <param name="error">The error to inspect.</param>
+    /// <returns>The original wrapped exception.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="error"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">There is no wrapped exception, or its type is not assignable to <typeparamref name="TException"/>.</exception>
     public static TException ShouldHaveException<TException>(this Error error)
         where TException : Exception
     {

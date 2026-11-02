@@ -6,9 +6,12 @@ namespace Railway.Toolkit.Testing;
 /// </summary>
 public static class ResultAssertionExtensions
 {
-    /// <summary>
-    /// Asserts that the result is Ok and returns its value for further assertions.
-    /// </summary>
+    /// <summary>Asserts that the result is Ok.</summary>
+    /// <typeparam name="T">The type of the success value.</typeparam>
+    /// <param name="result">The result to inspect.</param>
+    /// <returns>The original success value.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="result"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">The result does not satisfy the assertion.</exception>
     public static T ShouldBeOk<T>(this Result<T> result)
     {
         ArgumentNullException.ThrowIfNull(result);
@@ -23,9 +26,15 @@ public static class ResultAssertionExtensions
             $"Expected Result<{typeof(T).Name}> to be Ok, but it was Fail with Error {fail.Error}.");
     }
 
-    /// <summary>
-    /// Asserts that the result is Ok and its value equals <paramref name="expectedValue"/>.
-    /// </summary>
+    /// <summary>Asserts that the result is Ok and its value equals the expected value.</summary>
+    /// <typeparam name="T">The type of the success value.</typeparam>
+    /// <param name="result">The result to inspect.</param>
+    /// <param name="expectedValue">The expected success value.</param>
+    /// <param name="comparer">The equality comparer, or <see langword="null"/> to use <see cref="EqualityComparer{T}.Default"/>.</param>
+    /// <returns>The original success value.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="result"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">The result does not satisfy the assertion.</exception>
+    /// <remarks>Comparer exceptions propagate unchanged.</remarks>
     public static T ShouldBeOk<T>(this Result<T> result, T expectedValue, IEqualityComparer<T>? comparer = null)
     {
         T value = result.ShouldBeOk();
@@ -40,9 +49,15 @@ public static class ResultAssertionExtensions
         return value;
     }
 
-    /// <summary>
-    /// Asserts that the result is Ok and its value matches <paramref name="predicate"/>.
-    /// </summary>
+    /// <summary>Asserts that the result is Ok and its value matches the predicate.</summary>
+    /// <typeparam name="T">The type of the success value.</typeparam>
+    /// <param name="result">The result to inspect.</param>
+    /// <param name="predicate">The condition the value must satisfy.</param>
+    /// <param name="because">An optional reason included in the assertion failure message.</param>
+    /// <returns>The original success value.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="result"/> or <paramref name="predicate"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">The result does not satisfy the assertion.</exception>
+    /// <remarks>The predicate runs only for the expected result state. Predicate exceptions propagate unchanged.</remarks>
     public static T ShouldBeOkWhere<T>(this Result<T> result, Func<T, bool> predicate, string? because = null)
     {
         ArgumentNullException.ThrowIfNull(predicate);
@@ -59,9 +74,12 @@ public static class ResultAssertionExtensions
         return value;
     }
 
-    /// <summary>
-    /// Asserts that the result is Fail and returns its <see cref="Error"/> for further assertions.
-    /// </summary>
+    /// <summary>Asserts that the result is Fail.</summary>
+    /// <typeparam name="T">The type of the success value.</typeparam>
+    /// <param name="result">The result to inspect.</param>
+    /// <returns>The original error.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="result"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">The result does not satisfy the assertion.</exception>
     public static Error ShouldBeFail<T>(this Result<T> result)
     {
         ArgumentNullException.ThrowIfNull(result);
@@ -76,9 +94,13 @@ public static class ResultAssertionExtensions
             $"Expected Result<{typeof(T).Name}> to be Fail, but it was Ok with value '{ok.Value}'.");
     }
 
-    /// <summary>
-    /// Asserts that the result is Fail with the given error code.
-    /// </summary>
+    /// <summary>Asserts that the result is Fail with the expected error code.</summary>
+    /// <typeparam name="T">The type of the success value.</typeparam>
+    /// <param name="result">The result to inspect.</param>
+    /// <param name="expectedCode">The expected error code, compared using ordinal, case-sensitive equality.</param>
+    /// <returns>The original error.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="result"/> or <paramref name="expectedCode"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">The result does not satisfy the assertion.</exception>
     public static Error ShouldBeFail<T>(this Result<T> result, string expectedCode)
     {
         ArgumentNullException.ThrowIfNull(expectedCode);
@@ -94,9 +116,14 @@ public static class ResultAssertionExtensions
         return error;
     }
 
-    /// <summary>
-    /// Asserts that the result is Fail with the given error code and message.
-    /// </summary>
+    /// <summary>Asserts that the result is Fail with the expected error code and message.</summary>
+    /// <typeparam name="T">The type of the success value.</typeparam>
+    /// <param name="result">The result to inspect.</param>
+    /// <param name="expectedCode">The expected error code, compared using ordinal, case-sensitive equality.</param>
+    /// <param name="expectedMessage">The expected error message, compared using ordinal, case-sensitive equality.</param>
+    /// <returns>The original error.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="result"/>, <paramref name="expectedCode"/> or <paramref name="expectedMessage"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">The result does not satisfy the assertion.</exception>
     public static Error ShouldBeFail<T>(this Result<T> result, string expectedCode, string expectedMessage)
     {
         ArgumentNullException.ThrowIfNull(expectedMessage);
@@ -112,9 +139,15 @@ public static class ResultAssertionExtensions
         return error;
     }
 
-    /// <summary>
-    /// Asserts that the result is Fail and its error matches <paramref name="predicate"/>.
-    /// </summary>
+    /// <summary>Asserts that the result is Fail and its error matches the predicate.</summary>
+    /// <typeparam name="T">The type of the success value.</typeparam>
+    /// <param name="result">The result to inspect.</param>
+    /// <param name="predicate">The condition the error must satisfy.</param>
+    /// <param name="because">An optional reason included in the assertion failure message.</param>
+    /// <returns>The original error.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="result"/> or <paramref name="predicate"/> is <see langword="null"/>.</exception>
+    /// <exception cref="RailwayAssertionException">The result does not satisfy the assertion.</exception>
+    /// <remarks>The predicate runs only for the expected result state. Predicate exceptions propagate unchanged.</remarks>
     public static Error ShouldBeFailWhere<T>(this Result<T> result, Func<Error, bool> predicate, string? because = null)
     {
         ArgumentNullException.ThrowIfNull(predicate);

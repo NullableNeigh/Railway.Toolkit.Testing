@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <WarningsAsErrors>true</WarningsAsErrors>
     <RailwayToolkitVersion Condition="'$(RailwayToolkitVersion)' == ''">1.0.0</RailwayToolkitVersion>
   </PropertyGroup>
